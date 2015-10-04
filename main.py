@@ -10,8 +10,9 @@ import numpy as np
 from sklearn import svm
 
 # settings for LBP
-radius = 1
-n_points = 8
+radius = 2
+n_points = 16
+# 4116 dimensional lbp histogram
 X = []
 Y = []
 
