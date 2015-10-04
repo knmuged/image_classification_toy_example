@@ -8,6 +8,8 @@ import mahotas
 from mahotas.features.lbp import lbp
 import numpy as np
 from sklearn import svm
+from sklearn.decomposition import PCA
+
 
 # settings for LBP
 radius = 2
@@ -28,6 +30,8 @@ with open(sys.argv[1]) as f_in:
         else:
             Y.append(1)
 
+pca = PCA(n_components=3)
+X = pca.fit_transform(X)
 clf = svm.SVC()
 clf.fit(X, Y)  
 rate = 0.0
@@ -39,6 +43,7 @@ with open(sys.argv[2]) as f_in:
         img.resize(100,100)
         lbp_hist = lbp(img, radius, n_points)
         lbp_hist /= np.linalg.norm(lbp_hist)
+        lbp_hist = pca.transform(lbp_hist)
         pred = clf.predict(lbp_hist)[0]
         if 'background' in filename and pred == 0.0:
             rate += 1
