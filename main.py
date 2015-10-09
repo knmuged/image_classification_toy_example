@@ -30,9 +30,13 @@ with open(sys.argv[1]) as f_in:
         else:
             Y.append(1)
 
-pca = PCA(n_components=3)
+pca = PCA(n_components=40)
 X = pca.fit_transform(X)
-clf = svm.SVC()
+
+#clf = svm.SVC(kernel='linear')
+from sklearn.linear_model import LogisticRegressionCV
+clf = LogisticRegressionCV()
+
 clf.fit(X, Y)  
 rate = 0.0
 counter = 0
